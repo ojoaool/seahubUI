@@ -450,7 +450,7 @@ end
 function Library.CreateMain(Setting)
 
 	local TitleNameMain = tostring(Setting.Title) or "Nousigi Hub"
-	getgenv().MainDesc = Setting.Desc or ""
+	TextLabelMain.Text = "<font color=\"rgb("..color..")\">Nousigi Hub</font> " .. getgenv().MainDesc
 
 	local djtmemay = false
 	cac = false
