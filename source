@@ -122,7 +122,7 @@ local PremiumUIColor = {
 
 
 
-getgenv().UIColor = getgenv().T1 and T1UIColor or IndexUIColor
+getgenv().UIColor = getgenv().T1 and T1UIColor or PremiumUIColor
 
 getgenv().UIToggled = false
 
