@@ -230,7 +230,7 @@ Library.ToggleUI = function()
 end
 
 Library.DestroyUI = function()
-    if game.CoreGui:FindFirstChild("Nousigi Hub GUI") then for i, v in ipairs(game.CoreGui:GetChildren()) do if string.find(v.Name,  "Nousigi Hub") then v:Destroy() end end end
+    if game.CoreGui:FindFirstChild("Nousigi Hub GUI") then for i, v in ipairs(game.CoreGui:GetChildren()) do if string.find(v.Name,  "Seraphim HUB") then v:Destroy() end end end
 end
 
 if true then
@@ -389,7 +389,7 @@ local libCreateNoti = function(Setting)
 	local colorG = tostring(Library_Function.Getcolor(getgenv().UIColor['Title Text Color'])[2])
 	local colorB = tostring(Library_Function.Getcolor(getgenv().UIColor['Title Text Color'])[3])
 	local color = colorR .. ',' .. colorG .. ',' .. colorB
-	TextLabelNoti.Text = "<font color=\"rgb(" .. color .. ")\">Nousigi Hub</font> "..getgenv().TitleNameNoti
+	TextLabelNoti.Text = "<font color=\"rgb(" .. color .. ")\">Seraphim HUB</font> "..getgenv().TitleNameNoti
 	
 	TextLabelNoti.Name = "TextLabelNoti"
 	TextLabelNoti.Parent = Topnoti
@@ -487,7 +487,7 @@ end
 
 function Library.CreateMain(Setting)
 
-	local TitleNameMain = tostring(Setting.Title) or "Nousigi Hub"
+	local TitleNameMain = tostring(Setting.Title) or "Seraphim HUB"
 	getgenv().MainDesc = Setting.Desc or ""
 
 	local djtmemay = false
@@ -597,7 +597,7 @@ function Library.CreateMain(Setting)
 	local colorB = tostring(Library_Function.Getcolor(getgenv().UIColor['Title Text Color'])[3])
 	local color = colorR .. ',' .. colorG .. ',' .. colorB
 	local descText = getgenv().MainDesc or ""
-	TextLabelMain.Text = "<font color=\"rgb("..color..")\">Nousigi Hub</font> " .. descText
+	TextLabelMain.Text = "<font color=\"rgb("..color..")\">Seraphim HUB</font> " .. descText
 
 	PageControl.Name = "Background1"
 	PageControl.Parent = Concacmain
