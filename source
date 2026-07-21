@@ -1,5 +1,5 @@
 if getgenv().Nousigi then 
-	if game.CoreGui:FindFirstChild("Nousigi Hub GUI") then for i, v in ipairs(game.CoreGui:GetChildren()) do if string.find(v.Name,  "Nousigi Hub") then v:Destroy() end end end
+	if game.CoreGui:FindFirstChild("Nousigi Hub GUI") then for i, v in ipairs(game.CoreGui:GetChildren()) do if string.find(v.Name,  "Seraphim HUB") then v:Destroy() end end end
 end
 getgenv().Nousigi = true
 
@@ -93,11 +93,11 @@ local PremiumUIColor = {
 	["Text Color"] = Color3.fromRGB(230, 230, 230),
 	["Placeholder Text Color"] = Color3.fromRGB(120, 120, 120),
 	["Title Text Color"] = Color3.fromRGB(184, 212, 255),
-	["Background Main Color"] = Color3.fromRGB(12, 12, 12),
-	["Background 1 Color"] = Color3.fromRGB(15, 15, 15),
+	["Background Main Color"] = Color3.fromRGB(35, 35, 35),
+	["Background 1 Color"] = Color3.fromRGB(40, 40, 40),
 	["Background 1 Transparency"] = 0,
-	["Background 2 Color"] = Color3.fromRGB(30, 30, 30),
-	["Background 3 Color"] = Color3.fromRGB(22, 22, 22),
+	["Background 2 Color"] = Color3.fromRGB(60, 60, 60),
+	["Background 3 Color"] = Color3.fromRGB(48, 48, 48),
 	["Background Image"] = "",
 	["Page Selected Color"] = Color3.fromRGB(184, 212, 255),
 	["Section Text Color"] = Color3.fromRGB(184, 212, 255),
