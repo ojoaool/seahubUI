@@ -450,7 +450,7 @@ end
 function Library.CreateMain(Setting)
 
 	local TitleNameMain = tostring(Setting.Title) or "Nousigi Hub"
-	TextLabelMain.Text = "<font color=\"rgb("..color..")\">Nousigi Hub</font> " .. getgenv().MainDesc
+	getgenv().MainDesc = Setting.Desc or ""
 
 	local djtmemay = false
 	cac = false
@@ -498,11 +498,6 @@ function Library.CreateMain(Setting)
 	maingui.ImageTransparency = 1
 
 	maingui.ImageColor3 = getgenv().UIColor['Title Text Color']
-	local colorR = tostring(Library_Function.Getcolor(getgenv().UIColor['Title Text Color'])[1])
-	local colorG = tostring(Library_Function.Getcolor(getgenv().UIColor['Title Text Color'])[2])
-	local colorB = tostring(Library_Function.Getcolor(getgenv().UIColor['Title Text Color'])[3])
-	local color = colorR .. ',' .. colorG .. ',' .. colorB
-	TextLabelMain.Text = "<font color=\"rgb("..color..")\">Nousigi Hub</font> " .. getgenv().MainDesc
 
 	MainContainer = Instance.new("ImageLabel")
 	MainContainer.Name = "MainContainer"
@@ -563,7 +558,8 @@ function Library.CreateMain(Setting)
 	local colorG = tostring(Library_Function.Getcolor(getgenv().UIColor['Title Text Color'])[2])
 	local colorB = tostring(Library_Function.Getcolor(getgenv().UIColor['Title Text Color'])[3])
 	local color = colorR .. ',' .. colorG .. ',' .. colorB
-	TextLabelMain.Text = "<font color=\"rgb("..color..")\">Nousigi Hub</font> " .. getgenv().MainDesc
+	local descText = getgenv().MainDesc or ""
+	TextLabelMain.Text = "<font color=\"rgb("..color..")\">Nousigi Hub</font> " .. descText
 
 	PageControl.Name = "Background1"
 	PageControl.Parent = Concacmain
@@ -912,6 +908,11 @@ function Library.CreateMain(Setting)
 		local pageFunction = {}
 
 			function pageFunction.CreateSection(Section_Name, Toggleable, SectionGap, SectionColor)
+				-- Defensive: handle table input
+				if typeof(Section_Name) == "table" then
+					Section_Name = tostring(Section_Name.Title or Section_Name.Name or "Section")
+				end
+				Section_Name = tostring(Section_Name or "Section")
 
 				local Toggleable = Toggleable or false
 
@@ -1038,12 +1039,12 @@ function Library.CreateMain(Setting)
 					end)
 				end
 				if SectionGap then
-					local SectionGap = Instance.new("Frame")
-                    SectionGap.Name = "SectionGap"
-                    SectionGap.Parent = PageList
-                    SectionGap.Size = UDim2.new(1, -5, 0, 30)
-                    SectionGap.ClipsDescendants = true
-                    SectionGap.Transparency = 1
+					local GapFrame = Instance.new("Frame")
+                    GapFrame.Name = "SectionGap"
+                    GapFrame.Parent = PageList
+                    GapFrame.Size = UDim2.new(1, -5, 0, 30)
+                    GapFrame.ClipsDescendants = true
+                    GapFrame.Transparency = 1
 				end
 
 				UIGradient.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 1.00), NumberSequenceKeypoint.new(0.50, 0.00), NumberSequenceKeypoint.new(0.51, 0.02), NumberSequenceKeypoint.new(1.00, 1.00)}
