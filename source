@@ -566,7 +566,7 @@ function Library.CreateMain(Setting)
 	
 	TopMain.Name = "TopMain"
 	TopMain.Parent = MainContainer
-	TopMain.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TopMain.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 	TopMain.BackgroundTransparency = 1.000
 	TopMain.Size = UDim2.new(1, 0, 0, 25)
 	
