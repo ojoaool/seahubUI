@@ -79,7 +79,7 @@ local Library = { } do
     local Themes = {
         ["Dark"] = {
             Background = Color3.fromRGB(16, 16, 18), Topbar = Color3.fromRGB(22, 22, 26), Section = Color3.fromRGB(21, 20, 25),
-            Element = Color3.fromRGB(27, 26, 33), Accent = Color3.fromRGB(254, 0, 67), Text = Color3.fromRGB(255, 255, 255),
+            Element = Color3.fromRGB(27, 26, 33), Accent = Color3.fromRGB(255, 255, 255), Text = Color3.fromRGB(255, 255, 255),
             DimText = Color3.fromRGB(120, 120, 130), Border = Color3.fromRGB(30, 29, 34), Selected = Color3.fromRGB(29, 28, 37), ToggleOff = Color3.fromRGB(35, 25, 38)
         },
         ["Light"] = {
@@ -895,7 +895,7 @@ local Library = { } do
             Name = "\0",
             BackgroundTransparency = 1,
             Position = UDim2.new(0, 10, 0, 10),
-            Size = UDim2.new(0, 27, 0, 20),
+            Size = UDim2.new(0, 32, 0, 24),
             BorderSizePixel = 0
         })
         ApplyIcon(Items.Logo.Instance, Window.Logo)
