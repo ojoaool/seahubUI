@@ -1032,15 +1032,16 @@ local Library = { } do
         MakeThemeButton("sun", "Light"):Set(false)
 
         Items.PagesHolder = Library:Create("Frame", {
-            Parent = Items.MainFrame.Instance,
-            Name = "\0",
-            Position = UDim2.new(0, 15, 1, -56),
-            Size = UDim2.new(0, 0, 0, 40),
-            ZIndex = 3,
-            BorderSizePixel = 0,
-            AutomaticSize = Enum.AutomaticSize.X,
-            BackgroundColor3 = Library.Theme.Topbar
-        }):AddToTheme({ BackgroundColor3 = "Topbar" })
+    Parent = Items.MainFrame.Instance,
+    Name = "\0",
+    AnchorPoint = Vector2.new(0.5, 0),     -- ← adicionado
+    Position = UDim2.new(0.5, 0, 1, -56),  -- ← alterado
+    Size = UDim2.new(0, 0, 0, 40),
+    ZIndex = 3,
+    BorderSizePixel = 0,
+    AutomaticSize = Enum.AutomaticSize.X,
+    BackgroundColor3 = Library.Theme.Topbar
+}):AddToTheme({ BackgroundColor3 = "Topbar" })
 
         Library:Create("UICorner", {
             Parent = Items.PagesHolder.Instance,
@@ -1054,12 +1055,13 @@ local Library = { } do
         })
 
         Library:Create("UIListLayout", {
-            Parent = Items.PagesHolder.Instance,
-            FillDirection = Enum.FillDirection.Horizontal,
-            VerticalAlignment = Enum.VerticalAlignment.Center,
-            Padding = UDim.new(0, 4),
-            SortOrder = Enum.SortOrder.LayoutOrder
-        })
+    Parent = Items.PagesHolder.Instance,
+    FillDirection = Enum.FillDirection.Horizontal,
+    HorizontalAlignment = Enum.HorizontalAlignment.Center,  -- ← alterado
+    VerticalAlignment = Enum.VerticalAlignment.Center,
+    Padding = UDim.new(0, 4),
+    SortOrder = Enum.SortOrder.LayoutOrder
+})
 
         Window.Items = Items
 
