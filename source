@@ -1933,15 +1933,16 @@ end
         Params = Params or { }
 
         local Toggle = {
-            Name = Params.Name or Params.name or "Toggle",
-            Default = Params.Default or Params.default or false,
-            Callback = Params.Callback or Params.callback or function() end,
-            Tooltip = Params.Tooltip or Params.tooltip,
-            Flag = Params.Flag or Params.flag,
-            Keylist = Params.Keylist or Params.keylist or false,
-            Value = false,
-            Items = { }
-        }
+    Name = Params.Name or Params.name or "Toggle",
+    Default = Params.Default or Params.default or false,
+    Callback = Params.Callback or Params.callback or function() end,
+    Tooltip = Params.Tooltip or Params.tooltip,
+    Flag = Params.Flag or Params.flag,
+    Keylist = Params.Keylist or Params.keylist or false,
+    Icon = Params.Icon or Params.icon,        -- ← ADICIONAR
+    Value = false,
+    Items = { }
+}
 
         local Items = { }
 
@@ -1966,6 +1967,24 @@ end
             BorderSizePixel = 0
         })
 
+                local NameOffset = 12
+
+        if Toggle.Icon then
+            Items.Icon = Library:Create("ImageLabel", {
+                Parent = Items.Holder.Instance,
+                Name = "\0",
+                BackgroundTransparency = 1,
+                AnchorPoint = Vector2.new(0, 0.5),
+                Position = UDim2.new(0, 12, 0.5, 0),
+                Size = UDim2.new(0, 16, 0, 16),
+                BorderSizePixel = 0
+            })
+            ApplyIcon(Items.Icon.Instance, Toggle.Icon)
+            NameOffset = 34
+        end
+
+        
+
         Items.Name = Library:Create("TextLabel", {
             Parent = Items.Holder.Instance,
             Name = "\0",
@@ -1974,7 +1993,7 @@ end
             Text = Toggle.Name,
             TextSize = 14,
             BackgroundTransparency = 1,
-            Position = UDim2.new(0, 12, 0, 0),
+            Position = UDim2.new(0, NameOffset, 0, 0),
             Size = UDim2.new(1, -60, 1, 0),
             TextXAlignment = Enum.TextXAlignment.Left,
             BorderSizePixel = 0
