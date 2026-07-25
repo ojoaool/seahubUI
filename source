@@ -914,20 +914,42 @@ local Library = { } do
             BorderSizePixel = 0
         }):AddToTheme({ TextColor3 = "Accent" })
 
-        Items.User = Library:Create("TextLabel", {
-            Parent = Items.TopBar.Instance,
-            Name = "\0",
-            FontFace = Library.Font,
-            TextColor3 = Library.Theme.DimText,
-            Text = Window.User,
-            TextSize = 14,
-            BackgroundTransparency = 1,
-            AnchorPoint = Vector2.new(1, 0),
-            Position = UDim2.new(1, -12, 0, 0),
-            Size = UDim2.new(0, 157, 1, 0),
-            TextXAlignment = Enum.TextXAlignment.Right,
-            BorderSizePixel = 0
-        }):AddToTheme({ TextColor3 = "DimText" })
+       local function IsAssetId(Value)
+    if type(Value) == "number" then return true end
+    if type(Value) == "string" then
+        if string.match(Value, "^rbxassetid://") then return true end
+        if string.match(Value, "^%d+$") then return true end
+    end
+    return false
+end
+
+if IsAssetId(Window.User) then
+    Items.User = Library:Create("ImageLabel", {
+        Parent = Items.TopBar.Instance,
+        Name = "\0",
+        BackgroundTransparency = 1,
+        AnchorPoint = Vector2.new(1, 0.5),
+        Position = UDim2.new(1, -12, 0.5, 0),
+        Size = UDim2.new(0, 28, 0, 28),
+        BorderSizePixel = 0
+    })
+    ApplyIcon(Items.User.Instance, Window.User)
+else
+    Items.User = Library:Create("TextLabel", {
+        Parent = Items.TopBar.Instance,
+        Name = "\0",
+        FontFace = Library.Font,
+        TextColor3 = Library.Theme.DimText,
+        Text = Window.User,
+        TextSize = 14,
+        BackgroundTransparency = 1,
+        AnchorPoint = Vector2.new(1, 0),
+        Position = UDim2.new(1, -12, 0, 0),
+        Size = UDim2.new(0, 157, 1, 0),
+        TextXAlignment = Enum.TextXAlignment.Right,
+        BorderSizePixel = 0
+    }):AddToTheme({ TextColor3 = "DimText" })
+end
 
         Items.Line = Library:Create("Frame", {
             Parent = Items.MainFrame.Instance,
