@@ -141,6 +141,35 @@ local Library = { } do
     Library.ThemeKeys = { "Background", "Topbar", "Section", "Element", "Accent", "Text", "DimText", "Border" }
     Library.ThemeList = { "Dark", "Light", "Ocean", "Crimson", "Emerald", "Amethyst" }
 
+    -- ===== KEYLIST CORE (ADICIONADO) =====
+    Library.KeyOrder = { }
+    Library.KeyData = { }
+    Library.KeylistUI = nil
+
+    Library.SetKeyState = function(Self, Name, Active, Color)
+        if Active then
+            if not Library.KeyData[Name] then
+                local Data = { Name = Name, Color = Color or Library.Theme.Accent }
+                Library.KeyData[Name] = Data
+                table.insert(Library.KeyOrder, Data)
+            else
+                Library.KeyData[Name].Color = Color or Library.KeyData[Name].Color
+            end
+        else
+            local Data = Library.KeyData[Name]
+            if Data then
+                local Index = table.find(Library.KeyOrder, Data)
+                if Index then table.remove(Library.KeyOrder, Index) end
+                Library.KeyData[Name] = nil
+            end
+        end
+
+        if Library.KeylistUI and Library.KeylistUI.Refresh then
+            Library.KeylistUI:Refresh()
+        end
+    end
+    -- ===== FIM KEYLIST CORE =====
+
     Library.Animation = {
         Time = 0.25,
         Style = Enum.EasingStyle.Quart,
@@ -1265,6 +1294,112 @@ end
             return WItems
         end
 
+        -- ===== WINDOW:KEYLIST (ADICIONADO) =====
+        function Window:Keylist(Params)
+            Params = Params or { }
+            local Title = Params.Title or Params.title or "Keys"
+
+            local KItems = { }
+
+            KItems.Holder = Library:Create("Frame", {
+                Parent = Library.Holder.Instance,
+                Name = "\0",
+                Active = true,
+                AnchorPoint = Vector2.new(0, 0),
+                Position = UDim2.new(0, 16, 0, 16),
+                Size = UDim2.new(0, 140, 0, 0),
+                AutomaticSize = Enum.AutomaticSize.Y,
+                BorderSizePixel = 0,
+                BackgroundColor3 = Library.Theme.Section
+            }):AddToTheme({ BackgroundColor3 = "Section" })
+
+            Library:Create("UICorner", { Parent = KItems.Holder.Instance, CornerRadius = UDim.new(0, 8) })
+
+            Library:Create("UIStroke", {
+                Parent = KItems.Holder.Instance,
+                ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+                Color = Library.Theme.Border,
+                Transparency = 0.4
+            }):AddToTheme({ Color = "Border" })
+
+            Library:Create("UIPadding", {
+                Parent = KItems.Holder.Instance,
+                PaddingTop = UDim.new(0, 10),
+                PaddingBottom = UDim.new(0, 10),
+                PaddingLeft = UDim.new(0, 12),
+                PaddingRight = UDim.new(0, 12)
+            })
+
+            Library:Create("UIListLayout", {
+                Parent = KItems.Holder.Instance,
+                SortOrder = Enum.SortOrder.LayoutOrder,
+                Padding = UDim.new(0, 6)
+            })
+
+            KItems.Title = Library:Create("TextLabel", {
+                Parent = KItems.Holder.Instance,
+                Name = "\0",
+                FontFace = Library.Font,
+                TextColor3 = Library.Theme.Accent,
+                Text = Title,
+                TextSize = 14,
+                BackgroundTransparency = 1,
+                Size = UDim2.new(1, 0, 0, 16),
+                TextXAlignment = Enum.TextXAlignment.Left,
+                LayoutOrder = 0,
+                BorderSizePixel = 0
+            }):AddToTheme({ TextColor3 = "Accent" })
+
+            KItems.Divider = Library:Create("Frame", {
+                Parent = KItems.Holder.Instance,
+                Name = "\0",
+                Size = UDim2.new(1, 0, 0, 1),
+                LayoutOrder = 1,
+                BorderSizePixel = 0,
+                BackgroundColor3 = Library.Theme.Divider
+            }):AddToTheme({ BackgroundColor3 = "Divider" })
+
+            KItems.Holder:MakeDraggable()
+
+            local Rows = { }
+
+            local function MakeRow(Data, Order)
+                local Row = Library:Create("TextLabel", {
+                    Parent = KItems.Holder.Instance,
+                    Name = "\0",
+                    FontFace = Library.Font,
+                    TextColor3 = Data.Color,
+                    Text = Data.Name,
+                    TextSize = 13,
+                    BackgroundTransparency = 1,
+                    Size = UDim2.new(1, 0, 0, 15),
+                    TextXAlignment = Enum.TextXAlignment.Left,
+                    LayoutOrder = Order,
+                    BorderSizePixel = 0
+                })
+                return Row
+            end
+
+            function KItems:Refresh()
+                for Name, Row in Rows do
+                    Row.Instance:Destroy()
+                end
+                Rows = { }
+
+                for Index, Data in Library.KeyOrder do
+                    Rows[Data.Name] = MakeRow(Data, Index + 1)
+                end
+
+                KItems.Holder.Instance.Visible = #Library.KeyOrder > 0
+            end
+
+            KItems:Refresh()
+            Library.KeylistUI = KItems
+            Window.Items.Keylist = KItems
+            return KItems
+        end
+        -- ===== FIM WINDOW:KEYLIST =====
+
         table.insert(Library.Windows, Window)
 
         if IsMobile then
@@ -1803,6 +1938,7 @@ end
             Callback = Params.Callback or Params.callback or function() end,
             Tooltip = Params.Tooltip or Params.tooltip,
             Flag = Params.Flag or Params.flag,
+            Keylist = Params.Keylist or Params.keylist or false,
             Value = false,
             Items = { }
         }
@@ -1897,6 +2033,10 @@ end
             end
 
             Library:SafeCall(Toggle.Callback, Bool)
+
+            if Toggle.Keylist then
+                Library:SetKeyState(Toggle.Name, Bool)
+            end
         end
 
         function Toggle:Get()
